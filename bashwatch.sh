@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to your secure .env file
-ENV_FILE=/opt/secure_envs/watch_permissions.env
+ENV_FILE=/opt/secure_envs/bashwatch.env
 
 # Check if the .env file exists
 if [ ! -f "$ENV_FILE" ]; then
