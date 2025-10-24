@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # === Bashwatch ===
-# Automatically sets permissions and ownership for new files
+# Automatically sets permissions and ownership for new files and folders
 
 # Load environment variables securely
 source /opt/secure_envs/bashwatch.env
@@ -22,11 +22,17 @@ echo "👀 Watching folder: $WATCH_DIR"
 echo "Using permissions: $PERMISSIONS"
 echo "Setting owner: $OWNER_USER:$OWNER_GROUP"
 
-# Start watching for new files
+# Watch folder for new files or folders
 inotifywait -m -e create -e moved_to "$WATCH_DIR" --format "%w%f" | while read -r FULL_PATH; do
     if [ -f "$FULL_PATH" ]; then
+        # New file: set permissions and owner
         chmod "$PERMISSIONS" "$FULL_PATH"
         chown "$OWNER_USER":"$OWNER_GROUP" "$FULL_PATH"
-        echo "✅ Updated $FULL_PATH → perms $PERMISSIONS, owner $OWNER_USER:$OWNER_GROUP"
+        echo "✅ File updated: $FULL_PATH → perms $PERMISSIONS, owner $OWNER_USER:$OWNER_GROUP"
+    elif [ -d "$FULL_PATH" ]; then
+        # New folder: set permissions and owner recursively
+        chmod -R "$PERMISSIONS" "$FULL_PATH"
+        chown -R "$OWNER_USER":"$OWNER_GROUP" "$FULL_PATH"
+        echo "✅ Folder updated recursively: $FULL_PATH → perms $PERMISSIONS, owner $OWNER_USER:$OWNER_GROUP"
     fi
 done
