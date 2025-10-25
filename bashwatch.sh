@@ -19,20 +19,20 @@ if [ ! -d "$WATCH_DIR" ]; then
 fi
 
 echo "👀 Watching folder: $WATCH_DIR"
-echo "Using permissions: $PERMISSIONS"
+echo "Using permissions: 750"
 echo "Setting owner: $OWNER_USER:$OWNER_GROUP"
 
 # Watch folder for new files or folders
 inotifywait -m -e create -e moved_to "$WATCH_DIR" --format "%w%f" | while read -r FULL_PATH; do
     if [ -f "$FULL_PATH" ]; then
         # New file: set permissions and owner
-        chmod $PERMISSIONS "$FULL_PATH"
+        chmod 750 "$FULL_PATH"
         chown "$OWNER_USER":"$OWNER_GROUP" "$FULL_PATH"
-        echo "✅ File updated: $FULL_PATH → perms $PERMISSIONS, owner $OWNER_USER:$OWNER_GROUP"
+        echo "✅ File updated: $FULL_PATH → perms 750, owner $OWNER_USER:$OWNER_GROUP"
     elif [ -d "$FULL_PATH" ]; then
         # New folder: set permissions and owner recursively
-        chmod -R $PERMISSIONS "$FULL_PATH"
+        chmod -R 750 "$FULL_PATH"
         chown -R "$OWNER_USER":"$OWNER_GROUP" "$FULL_PATH"
-        echo "✅ Folder updated recursively: $FULL_PATH → perms $PERMISSIONS, owner $OWNER_USER:$OWNER_GROUP"
+        echo "✅ Folder updated recursively: $FULL_PATH → perms 750, owner $OWNER_USER:$OWNER_GROUP"
     fi
 done
