@@ -23,7 +23,7 @@ echo "Using permissions: 750"
 echo "Setting owner: $OWNER_USER:$OWNER_GROUP"
 
 # Watch folder for new files or folders
-inotifywait -m -e create -e moved_to "$WATCH_DIR" --format "%w%f" | while read -r FULL_PATH; do
+inotifywait -m -r -e create -e moved_to "$WATCH_DIR" --format "%w%f" | while read -r FULL_PATH; do
     if [ -f "$FULL_PATH" ]; then
         # New file: set permissions and owner
         chmod 750 "$FULL_PATH"
