@@ -10,10 +10,9 @@ My private script stash
 
 ## Features
 
-* ✅ Automatically sets permissions for new files and folders
+* ✅ Automatically sets permissions for new files and folders recursively
 * ✅ Ensures correct ownership for specified users and groups
 * ✅ Monitors directories in real-time using `inotify-tools`
-* ✅ Logs all changes for easy tracking and debugging
 * ✅ Fully configurable through a secure `.env` file
 
 ---
@@ -73,32 +72,13 @@ All configurable options are stored in the `.env` file:
 
 ```env
 WATCH_DIR=/path/to/watch
-DEFAULT_PERMISSIONS=750
 DEFAULT_USER=username
 DEFAULT_GROUP=groupname
-LOG_FILE=/var/log/bashwatch.log
 ```
 
 * `WATCH_DIR` → directory to monitor
-* `DEFAULT_PERMISSIONS` → default chmod for new files/folders
 * `DEFAULT_USER` / `DEFAULT_GROUP` → ownership settings
-* `LOG_FILE` → path for logging all changes
 
----
-
-## Logging
-
-Bashwatch logs all operations, including:
-
-* Permissions changes
-* Ownership updates
-* Errors or skipped files
-
-Check the log file to verify the script is working:
-
-```bash
-tail -f /var/log/bashwatch.log
-```
 
 ---
 
