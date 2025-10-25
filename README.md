@@ -22,7 +22,7 @@ My private script stash
 1. Clone or download the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/goozi12345/Scriptorium.git
 cd bashwatch
 ```
 
